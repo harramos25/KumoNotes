@@ -73,7 +73,7 @@ function App() {
       <FloatingStickers />
 
       {/* Main UI Container */}
-      <div className="z-10 w-full max-w-md flex flex-col items-center gap-8">
+      <div className="relative z-10 w-full max-w-md flex flex-col items-center gap-8">
 
         {/* Header */}
         <div className="text-center">
