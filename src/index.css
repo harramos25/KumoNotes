@@ -4,8 +4,10 @@ body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background: linear-gradient(180deg, #eaf6ff, #fdecef);
-  min-height: 100vh;
-  overflow: hidden;
+  /* Fix #1: Enable scrolling */
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .app {
@@ -13,8 +15,42 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
+  padding-bottom: 96px;
+  /* Room for fixed bottom controls */
+}
+
+/* Fix #2: Sticker Layer Styles */
+.sticker-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* doesn't block clicks */
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sticker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: floaty var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+  filter: saturate(0.95);
+}
+
+@keyframes floaty {
+  0% {
+    transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(var(--rot));
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateY(calc(var(--drift) * -1)) translateX(calc(var(--drift) * 0.35)) rotate(var(--rot));
+  }
+
+  100% {
+    transform: translate(-50%, -50%) translateY(0) translateX(0) rotate(var(--rot));
+  }
 }
 
 .note-card {
@@ -77,8 +113,3 @@ body {
 }
 
 /* Floating Stickers CSS if needed, though we use framer-motion inline mostly */
-.sticker {
-  position: absolute;
-  /* opacity: 0.3; handled in component */
-  /* animation: float 8s ease-in-out infinite; handled in component */
-}
