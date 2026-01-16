@@ -77,50 +77,36 @@ body {
 }
 
 /* Fix #10: Preview Wrapper (Container for the Scaled UI) */
-.preview-wrap {
+/* Fix #10: Card Wrapper (Standard Responsive Logic) */
+.card-wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px 40px;
-  overflow: hidden;
-  /* Hide the overflow from the huge scaled element */
-  /* This ensures mobile doesn't scroll horizontally or vertically unnecessarily */
+  padding: 24px 16px 140px;
+  /* Standard spacing, no overflow hiding needed */
 }
 
-/*
-   Fix #13: Safe Export Surface
-   This is the actual "canvas" we export. It is 1080x1920 (Story size).
+/* 
+   Fix #13: Hidden Export Engine
+   Completely removed from document flow.
+   Strictly 1080x1920.
 */
-.export-surface {
-  position: relative;
+.export-hidden {
+  position: fixed;
+  left: -99999px;
+  top: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.export-frame {
   width: 1080px;
   height: 1920px;
+  position: relative;
+  overflow: hidden;
   background: #fff;
-  /* fallback */
-  flex-shrink: 0;
-
-  transform-origin: top center;
-  border-radius: 40px;
-  /* larger radius for the huge container */
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
-}
-
-/*
-   The UI state: Scaled down to fit screen.
-   This class is removed on the CLONE during export.
-*/
-.export-preview {
-  transform: scale(0.28);
-  transform-origin: top center;
-}
-
-/* Mobile Scale Adjustment */
-@media (max-width: 480px) {
-  .export-preview {
-    transform: scale(0.28);
-    margin-bottom: -1330px;
-  }
 }
 
 .export-bg {
@@ -145,15 +131,12 @@ body {
 }
 
 /* Make sure the note card inside fills the convenient space or behaves nicely */
+/* Ensure export card is static (no breathing) */
 .export-card .note-card {
-  /* We reset the note-card sizing for the 1080p context */
-  width: 100%;
-  max-width: 800px;
-  /* proportional to 1080px width */
-  margin: 0;
-  transform: none;
-  /* Reset breathe animation context if needed, but we might want it? User said "breathe" for UI. */
-  /* User said "breathe" animation. If we scale the whole surface, the breathe animation is inside. */
+  animation: none !important;
+  transform: none !important;
+  /* Optional: we can let it be its natural 420px width, 
+     which will render crystal clear at scale: 2 (840px physics) */
 }
 
 /* Fix #4: Control Button Sizing & Interactions */
