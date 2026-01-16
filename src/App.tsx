@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import NoteCard from './components/NoteCard';
 import FloatingStickers from './components/FloatingStickers';
 import Controls from './components/Controls';
-import particlesBg from './assets/particles.png';
+
 
 // Data
 import notesData from './data/notes.json';
@@ -104,14 +104,7 @@ function App() {
       {/* Background Particles Layer */}
       {aestheticMode && (
         <>
-          <div
-            className="absolute inset-0 z-0 opacity-30 pointer-events-none"
-            style={{
-              backgroundImage: `url(${particlesBg})`,
-              backgroundSize: '400px',
-              animation: 'float 20s linear infinite' // simple parallax
-            }}
-          />
+
           <FloatingStickers />
         </>
       )}
