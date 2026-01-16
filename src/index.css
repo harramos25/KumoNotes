@@ -79,14 +79,18 @@ body {
 /* Fix #10: Card Wrapper (Spacing & Layout) */
 .card-wrap {
   width: 100%;
-  display: grid;
-  place-items: center;
+  display: flex;
+  /* Changed from grid to flex for better centering of wide children */
+  flex-direction: column;
+  align-items: center;
   /* Removed padding as the scale handles the "space" visually */
   padding-bottom: 40px;
+  overflow: visible;
+  /* Ensure no clipping of the wide surface */
 }
 
-/* 
-   Fix #13: Safe Export Surface 
+/*
+   Fix #13: Safe Export Surface
    This is the actual "canvas" we export. It is 1080x1920 (Story size).
    We scale it down to show it on screen.
 */
@@ -104,15 +108,23 @@ body {
   border-radius: 40px;
   /* larger radius for the huge container */
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
-  margin-bottom: -1200px;
+
+  /* Crucial for centering: Flexbox handles align-items center,
+     but explicit margin doesn't hurt. */
+  margin: 0 auto;
+  flex-shrink: 0;
+  /* Don't let flex shrink the 1080px width */
+
+  margin-bottom: -1250px;
   /* Counteract the huge height after scaling */
 }
 
 /* Mobile Scale Adjustment */
 @media (max-width: 480px) {
   .export-surface {
-    transform: scale(0.27);
-    margin-bottom: -1300px;
+    /* Slightly smaller scale for safety on narrow screens */
+    transform: scale(0.28);
+    margin-bottom: -1330px;
     /* Adjust spacing */
   }
 }
