@@ -359,6 +359,10 @@ body {
     0 0 0 #e89ac5;
 }
 
+.stamp {
+  display: none;
+}
+
 .export-content {
   position: relative;
   z-index: 1;
@@ -366,8 +370,7 @@ body {
   display: grid;
   place-items: center;
   /* Shift visually higher (IG UI safety) */
-  padding-top: 200px;
-  padding-bottom: 240px;
+  padding: 220px 120px 340px;
 }
 
 /* 
@@ -375,9 +378,12 @@ body {
    Scale up ONLY when inside .export-frame (1080x1920 canvas)
 */
 .export-frame .export-card {
-  width: 760px;
-  padding: 48px 44px;
-  border-radius: 36px;
+  width: 780px;
+  min-height: 520px;
+  padding: 54px 48px;
+  border-radius: 42px;
+  background: rgba(255, 245, 255, 0.92);
+  backdrop-filter: blur(6px);
   box-shadow:
     0 0 0 4px #c7b9ff,
     0 36px 80px rgba(180, 160, 255, 0.35);
@@ -387,19 +393,29 @@ body {
 
 .export-frame .note-title {
   font-size: 16px;
-  margin-bottom: 32px;
-  /* Give it space */
+  opacity: 0.55;
+  letter-spacing: 1px;
+  margin-bottom: 0;
 }
 
 .export-frame .note-text {
-  font-size: 40px;
-  line-height: 1.35;
-  margin-bottom: 32px;
+  font-size: 46px;
+  /* ✅ readable in story */
+  line-height: 1.28;
+  margin-top: 12px;
+  margin-bottom: 26px;
+}
+
+.export-frame .tag-row {
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .export-frame .tag {
   font-size: 16px;
-  padding: 8px 14px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(200, 220, 255, 0.55);
 }
 
 .export-frame .note-footer {
@@ -411,6 +427,13 @@ body {
   font-size: 13px;
   opacity: 0.6;
   margin-top: 8px;
+}
+
+.export-frame .stamp {
+  display: block;
+  font-size: 20px;
+  opacity: 0.25;
+  margin-bottom: 14px;
 }
 
 /* Fix #6: Controls Row (Strict Horizontal) */

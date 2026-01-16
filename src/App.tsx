@@ -8,6 +8,7 @@ import Controls from './components/Controls';
 function NoteContent({ note }: { note: Note }) {
   return (
     <>
+      <div className="stamp">★ ☆ ★</div>
       <div className="note-title">KUMONOTE ☁️</div>
       <div className="note-text">{note.text}</div>
       <div className="tag-row">
