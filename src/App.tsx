@@ -7,6 +7,7 @@ import { NoteCard } from './components/NoteCard';
 // Assuming lucide-react is installed.
 // "import { RefreshCw, Download, Share2 } from 'lucide-react';"
 import { RefreshCw, Download, Share2 } from 'lucide-react';
+import Controls from './components/Controls';
 
 function App() {
   const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]);

@@ -1,39 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap');
-
-:root {
-  --font-heading: 'Baloo 2', cursive;
-  --font-body: 'Nunito', sans-serif;
-  --color-blue: #E0F7FA;
-  --color-pink: #FCE4EC;
-  --color-text: #546E7A;
-}
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700&display=swap');
 
 body {
   margin: 0;
-  font-family: var(--font-body);
-  /* The Animated Gradient Background */
-  background: linear-gradient(135deg, #E0F7FA 0%, #FCE4EC 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-  overflow-x: hidden;
-  color: var(--color-text);
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(180deg, #eaf6ff, #fdecef);
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.note-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 28px 24px;
+  max-width: 420px;
+  width: 88%;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  animation: popIn 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Ensure it looks like a card */
+  aspect-ratio: auto;
+  /* Let content dictate or use specific ratio if needed, but user said "aspect-ratio: 9/16" is for the STORY export. For UI, "width: 88%, max-width: 420px" is the rule. */
+}
+
+.note-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  /* 12-13px */
+  opacity: 0.6;
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5b6b7a;
+}
+
+.note-text {
+  font-family: 'Baloo 2', cursive;
+  font-size: 32px;
+  /* 28-34px */
+  line-height: 1.3;
+  color: #5b6b7a;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.note-footer {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  opacity: 0.5;
+  color: #5b6b7a;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
   }
 
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-/* Scrollbar hide for cleaner UI */
-::-webkit-scrollbar {
-  display: none;
+/* Floating Stickers CSS if needed, though we use framer-motion inline mostly */
+.sticker {
+  position: absolute;
+  /* opacity: 0.3; handled in component */
+  /* animation: float 8s ease-in-out infinite; handled in component */
 }
