@@ -174,8 +174,24 @@ body {
     transform: scale(0.96);
   }
 
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  transform: scale(1);
+}
+}
+
+/* Fix #6: Controls Row (Strict Horizontal) */
+.controls-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: auto;
+
+  /* Glass panel styles */
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }

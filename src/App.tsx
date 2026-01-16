@@ -108,16 +108,18 @@ function App() {
           </div>
         )}
 
-        {/* Controls */}
-        <div className="mt-8 z-50">
-          <Controls
-            onDownload={handleDownload}
-            onShare={handleShare}
-            aestheticMode={aestheticMode}
-            setAestheticMode={setAestheticMode}
-            disabled={isExporting || !hasOpened}
-          />
-        </div>
+        {/* Controls - Only visible after opening */}
+        {hasOpened && (
+          <div className="mt-8 z-50">
+            <Controls
+              onDownload={handleDownload}
+              onShare={handleShare}
+              aestheticMode={aestheticMode}
+              setAestheticMode={setAestheticMode}
+              disabled={isExporting}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
