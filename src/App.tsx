@@ -81,7 +81,7 @@ function App() {
 
       {/* Main UI Container */}
       <main className="app">
-        <div className="relative z-10 w-full max-w-md flex flex-col items-center gap-8">
+        <div className="card-wrap">
           {/* The Card */}
           {!hasOpened ? (
             <div className="note-card">
