@@ -3,11 +3,8 @@ import html2canvas from 'html2canvas'; // Import library
 import { NOTES, type Note } from './data/notes';
 import { FloatingStickers } from './components/FloatingStickers';
 import { NoteCard } from './components/NoteCard';
-// We need to import the icons. User asked for Lucide React.
-// Assuming lucide-react is installed.
-// "import { RefreshCw, Download, Share2 } from 'lucide-react';"
-import { RefreshCw, Download, Share2 } from 'lucide-react';
 import Controls from './components/Controls';
+// Lucide icons are now used inside Controls.tsx, not here.
 
 function App() {
   const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]);
@@ -85,39 +82,14 @@ function App() {
         <NoteCard ref={cardRef} note={currentNote} />
 
         {/* Controls */}
-        <div className="flex items-center gap-4">
-
-          {/* Refresh Button (Big) */}
-          <button
-            onClick={getRandomNote}
-            className="group relative bg-white px-8 py-4 rounded-full font-heading text-xl text-slate-500 font-bold transition-transform active:translate-y-1"
-            style={{ boxShadow: '0px 6px 0px #CBD5E1' }} // Chunky shadow
-          >
-            <div className="flex items-center gap-2">
-              <RefreshCw className="group-hover:rotate-180 transition-transform duration-500" />
-              <span>New Note</span>
-            </div>
-          </button>
-
-          {/* Download Button (Small) */}
-          <button
-            onClick={handleDownload}
-            disabled={isExporting}
-            className="bg-pink-100 p-4 rounded-full text-pink-500 transition-transform active:translate-y-1"
-            style={{ boxShadow: '0px 6px 0px #F8BBD0' }}
-          >
-            <Download />
-          </button>
-
-          {/* Share Button (Small) */}
-          <button
-            onClick={handleShare}
-            className="bg-blue-100 p-4 rounded-full text-blue-500 transition-transform active:translate-y-1"
-            style={{ boxShadow: '0px 6px 0px #B3E5FC' }}
-          >
-            <Share2 />
-          </button>
-
+        <div className="mt-8 z-50">
+          <Controls
+            onNewNote={getRandomNote}
+            onDownload={handleDownload}
+            onShare={handleShare}
+            aestheticMode={true}
+            setAestheticMode={() => { }}
+          />
         </div>
       </div>
     </div>
