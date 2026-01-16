@@ -111,21 +111,8 @@ body {
    This class is removed on the CLONE during export.
 */
 .export-preview {
-  transform: scale(0.32);
-  /* Use negative margin to reclaim space ONLY if needed visually,
-     but overflow:hidden on parent usually is cleaner.
-     User suggested standard flow.
-     If we scale 0.32, the height (1920) becomes ~614px.
-     The element still takes up 1920px in DOM flow unless we adjust margin-bottom
-     OR the parent has fixed height/overflow behavior.
-     Let's keep the marginBottom hack just to be safe for flow,
-     or trust the user's "overflow: hidden" on parent to chop it?
-     Overflow hidden chops the visual, but the space might still be reserved?
-     Transforms don't affect layout flow size, the element is still 1920px tall in flow
-     unless we do negative margins.
-     Let's adding the negative margin back to the Preview class specifically.
-  */
-  margin-bottom: -1250px;
+  transform: scale(0.28);
+  transform-origin: top center;
 }
 
 /* Mobile Scale Adjustment */
@@ -403,40 +390,4 @@ body {
 
 /* Obsolete .export-hidden styles removed */
 
-.export-frame {
-  position: relative;
-  width: 1080px;
-  height: 1920px;
-  overflow: hidden;
-  background: white;
-}
-
-.export-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url('./assets/pixel-sky.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-}
-
-.export-card-container {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Adjust card for export frame */
-.export-frame .note-card {
-  width: min(78vw, 380px) !important;
-  transform: scale(1.5) !important;
-  /* Keep the scale we added previously or adjust if needed */
-  margin: 0 auto;
-  animation: none !important;
-  /* No breathing in static export */
-}
+/* Obsolete export styles removed */

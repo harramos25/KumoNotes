@@ -36,15 +36,40 @@ function App() {
   };
 
   const handleDownload = async () => {
-    if (!exportRef.current) return;
+    if (!cardRef.current) return;
     setIsExporting(true);
 
+    const original = cardRef.current;
+
+    // ✅ clone so we don't touch the UI
+    const clone = original.cloneNode(true) as HTMLElement;
+
+    // ✅ remove preview scaling class
+    clone.classList.remove("export-preview");
+
+    // ✅ put offscreen but renderable
+    clone.style.position = "fixed";
+    clone.style.left = "-99999px";
+    clone.style.top = "0";
+    clone.style.transform = "none";
+    clone.style.width = "1080px";
+    clone.style.height = "1920px";
+    // We expect the internal .export-bg to handle the background, 
+    // but a fallback doesn't hurt.
+    clone.style.background = "#fff4cc";
+
+    document.body.appendChild(clone);
+
     try {
-      /* Capture the dedicated export frame */
-      const canvas = await html2canvas(exportRef.current, {
-        scale: 1, // It's already 1080px wide
+      const canvas = await html2canvas(clone, {
+        backgroundColor: null, // keep whatever your export-bg provides
+        scale: 2, // High resolution export
         useCORS: true,
-        backgroundColor: null, // We have our own bg
+        allowTaint: true,
+        width: 1080,
+        height: 1920,
+        windowWidth: 1080,
+        windowHeight: 1920,
       });
 
       const image = canvas.toDataURL("image/png");
@@ -55,6 +80,7 @@ function App() {
     } catch (err) {
       console.error("Export failed", err);
     } finally {
+      document.body.removeChild(clone);
       setIsExporting(false);
     }
   };
