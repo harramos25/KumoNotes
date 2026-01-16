@@ -18,20 +18,15 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, aestheticMode, cardRef }) => 
   return (
     <div
       ref={cardRef}
-      className={`relative w-full max-w-[90%] md:max-w-md aspect-[9/16] p-8 flex flex-col items-center justify-center text-center transition-all duration-500 ease-out transform ${aestheticMode ? 'glass-card' : 'solid-card'}`}
+      className={`relative w-auto h-auto max-w-full max-h-[75vh] md:max-h-[85vh] aspect-[9/16] p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all duration-500 ease-out transform ${aestheticMode ? 'glass-card' : 'solid-card'}`}
       style={{
-        width: '1080px', // Scaling handled by transform scale in parent if needed, but for html2canvas we want a fixed reference or we style responsively.
-        // Actually, to ensure it looks good on mobile but exports at 1080x1920, we might need a wrapper.
-        // Let's rely on CSS media queries for display, but when exporting, the tool usually captures rendered size. 
-        // We'll handle export logic in App.tsx by temporarily sizing or cloning.
-        // For now, let's style it to fit the screen flexibly.
-        maxWidth: '100%',
-        aspectRatio: '9/16',
-        borderRadius: '3rem',
+        // Removed fixed width 1080px to prevent layout breakage on screens.
+        // We rely on html2canvas scale for high-res export.
         boxShadow: aestheticMode ? '0 8px 32px 0 rgba(31, 38, 135, 0.37)' : '0 10px 15px -3px rgba(0,0,0,0.1)',
         border: aestheticMode ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
         background: aestheticMode ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: aestheticMode ? 'blur(10px)' : 'none',
+        borderRadius: '24px', // standardized
       }}
     >
       {/* Floating elements inside card?? No, user asked for stickers "slowly float... using CSS keyframes". */}
