@@ -137,7 +137,7 @@ function App() {
         <div ref={exportRef} className="export-frame">
           <div className="export-bg" />
           <div className="export-content">
-            <div className="note-card">
+            <div className="note-card export-card">
               <NoteContent note={currentNote} />
             </div>
           </div>

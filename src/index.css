@@ -365,7 +365,52 @@ body {
   height: 100%;
   display: grid;
   place-items: center;
-  padding: 160px 120px;
+  /* Shift visually higher (IG UI safety) */
+  padding-top: 200px;
+  padding-bottom: 240px;
+}
+
+/* 
+   FIX #14: Context-Aware Export Sizing 
+   Scale up ONLY when inside .export-frame (1080x1920 canvas)
+*/
+.export-frame .export-card {
+  width: 760px;
+  padding: 48px 44px;
+  border-radius: 36px;
+  box-shadow:
+    0 0 0 4px #c7b9ff,
+    0 36px 80px rgba(180, 160, 255, 0.35);
+  /* Ensure no transform scaling on the card itself */
+  transform: none !important;
+}
+
+.export-frame .note-title {
+  font-size: 16px;
+  margin-bottom: 32px;
+  /* Give it space */
+}
+
+.export-frame .note-text {
+  font-size: 40px;
+  line-height: 1.35;
+  margin-bottom: 32px;
+}
+
+.export-frame .tag {
+  font-size: 16px;
+  padding: 8px 14px;
+}
+
+.export-frame .note-footer {
+  font-size: 14px;
+  margin-top: 32px;
+}
+
+.export-frame .watermark {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 8px;
 }
 
 /* Fix #6: Controls Row (Strict Horizontal) */
