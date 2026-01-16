@@ -5,6 +5,22 @@ import { FloatingStickers } from './components/FloatingStickers';
 import Controls from './components/Controls';
 // Lucide icons are now used inside Controls.tsx, not here.
 
+function NoteContent({ note }: { note: Note }) {
+  return (
+    <>
+      <div className="note-title">KUMONOTE ☁️</div>
+      <div className="note-text">{note.text}</div>
+      <div className="tag-row">
+        {(note.tags ?? []).map((t) => (
+          <span key={t} className="tag">#{t}</span>
+        ))}
+      </div>
+      <div className="note-footer">a note for you 💗</div>
+      <div className="watermark">kumo-notes.vercel.app</div>
+    </>
+  );
+}
+
 function App() {
   const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]); // Default init, but won't be shown until open
   const cardRef = useRef<HTMLDivElement>(null);
@@ -36,36 +52,14 @@ function App() {
   };
 
   const handleDownload = async () => {
-    if (!cardRef.current) return;
+    if (!exportRef.current) return;
     setIsExporting(true);
 
-    const original = cardRef.current;
-
-    // ✅ clone so we don't touch the UI
-    const clone = original.cloneNode(true) as HTMLElement;
-
-    // ✅ remove preview scaling class
-    clone.classList.remove("export-preview");
-
-    // ✅ put offscreen but renderable
-    clone.style.position = "fixed";
-    clone.style.left = "-99999px";
-    clone.style.top = "0";
-    clone.style.transform = "none";
-    clone.style.width = "1080px";
-    clone.style.height = "1920px";
-    // We expect the internal .export-bg to handle the background, 
-    // but a fallback doesn't hurt.
-    clone.style.background = "#fff4cc";
-
-    document.body.appendChild(clone);
-
     try {
-      const canvas = await html2canvas(clone, {
-        backgroundColor: null, // keep whatever your export-bg provides
-        scale: 2, // High resolution export
+      const canvas = await html2canvas(exportRef.current, {
+        scale: 2,
         useCORS: true,
-        allowTaint: true,
+        backgroundColor: null,
         width: 1080,
         height: 1920,
         windowWidth: 1080,
@@ -80,7 +74,6 @@ function App() {
     } catch (err) {
       console.error("Export failed", err);
     } finally {
-      document.body.removeChild(clone);
       setIsExporting(false);
     }
   };
@@ -120,18 +113,7 @@ function App() {
             </div>
           ) : (
             <div className="note-card" ref={cardRef}>
-              <div className="note-title">KUMONOTE ☁️</div>
-              <div className="note-text">{currentNote.text}</div>
-
-              {/* Tags */}
-              <div className="tag-row">
-                {(currentNote.tags ?? []).map((t: string) => (
-                  <span key={t} className="tag">#{t}</span>
-                ))}
-              </div>
-
-              <div className="note-footer">a note for you 💗</div>
-              <div className="watermark">kumo-notes.vercel.app</div>
+              <NoteContent note={currentNote} />
             </div>
           )}
 
@@ -154,18 +136,9 @@ function App() {
       <div className="export-hidden">
         <div ref={exportRef} className="export-frame">
           <div className="export-bg" />
-          <div className="export-card-container">
-            {/* Scaled up Card for Export */}
-            <div className="note-card" style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
-              <div className="note-title">KUMONOTE ☁️</div>
-              <div className="note-text">{currentNote.text}</div>
-              <div className="tag-row">
-                {(currentNote.tags ?? []).map((t: string) => (
-                  <span key={t} className="tag">#{t}</span>
-                ))}
-              </div>
-              <div className="note-footer">a note for you 💗</div>
-              <div className="watermark">kumo-notes.vercel.app</div>
+          <div className="export-content">
+            <div className="note-card">
+              <NoteContent note={currentNote} />
             </div>
           </div>
         </div>

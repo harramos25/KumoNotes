@@ -118,7 +118,7 @@ body {
 .export-bg {
   position: absolute;
   inset: 0;
-  background-image: url('./assets/pixel-sky.png');
+  background-image: url('/pixel-bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -357,6 +357,15 @@ body {
   box-shadow:
     0 0 0 2px #ffb7dc,
     0 0 0 #e89ac5;
+}
+
+.export-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 160px 120px;
 }
 
 /* Fix #6: Controls Row (Strict Horizontal) */
