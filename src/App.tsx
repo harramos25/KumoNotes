@@ -6,16 +6,14 @@ import Controls from './components/Controls';
 // Lucide icons are now used inside Controls.tsx, not here.
 
 function App() {
-  const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]);
+  const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]); // Default init, but won't be shown until open
   const cardRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [seed, setSeed] = useState(0);
   const [aestheticMode, setAestheticMode] = useState(true);
+  const [hasOpened, setHasOpened] = useState(false);
 
-  // Initialize with a random note on mount
-  useEffect(() => {
-    getRandomNote();
-  }, []);
+  // Removed auto-init useEffect so user must click open
 
   const getRandomNote = () => {
     let newNote;
@@ -26,6 +24,13 @@ function App() {
     setCurrentNote(newNote);
     // Force sticker re-randomization on new note
     setSeed(s => s + 1);
+  };
+
+  const handleOpen = () => {
+    if (!hasOpened) {
+      getRandomNote();
+      setHasOpened(true);
+    }
   };
 
   const handleDownload = async () => {
@@ -83,7 +88,29 @@ function App() {
         </div>
 
         {/* The Card */}
-        <NoteCard ref={cardRef} note={currentNote} aestheticMode={aestheticMode} />
+        {!hasOpened ? (
+          <div className="note-card">
+            <div className="note-title">KumoNote ☁️</div>
+            <button className="open-btn" onClick={handleOpen}>
+              💌 A note for you — Open
+            </button>
+            <div className="note-footer" style={{ marginTop: '12px' }}>tap to receive your note</div>
+          </div>
+        ) : (
+          <div className="note-card" ref={cardRef}>
+            <div className="note-title">KUMONOTE ☁️</div>
+            <div className="note-text">{currentNote.text}</div>
+
+            {/* Tags */}
+            <div className="tag-row">
+              {(currentNote.tags ?? []).map((t: string) => (
+                <span key={t} className="tag">#{t}</span>
+              ))}
+            </div>
+
+            <div className="note-footer">a note for you 💗</div>
+          </div>
+        )}
 
         {/* Controls */}
         <div className="mt-8 z-50">
@@ -93,7 +120,7 @@ function App() {
             onShare={handleShare}
             aestheticMode={aestheticMode}
             setAestheticMode={setAestheticMode}
-            disabled={isExporting}
+            disabled={isExporting || !hasOpened}
           />
         </div>
       </div>
