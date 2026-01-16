@@ -1,82 +1,54 @@
 import { useState, useRef, useEffect } from 'react';
-import html2canvas from 'html2canvas';
-
-// Components
-import NoteCard from './components/NoteCard';
-import FloatingStickers from './components/FloatingStickers';
-import Controls from './components/Controls';
-
-
-// Data
-import notesData from './data/notes.json';
-
-interface Note {
-  id: number;
-  text: string;
-  category: string;
-  tags: string[];
-}
+import html2canvas from 'html2canvas'; // Import library
+import { NOTES, Note } from './data/notes';
+import { FloatingStickers } from './components/FloatingStickers';
+import { NoteCard } from './components/NoteCard';
+// We need to import the icons. User asked for Lucide React.
+// Assuming lucide-react is installed.
+// "import { RefreshCw, Download, Share2 } from 'lucide-react';"
+import { RefreshCw, Download, Share2 } from 'lucide-react';
 
 function App() {
-  const [currentNote, setCurrentNote] = useState<Note>(notesData[0]);
-  const [aestheticMode, setAestheticMode] = useState<boolean>(true);
+  const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   // Initialize with a random note on mount
   useEffect(() => {
-    randomizeNote();
+    getRandomNote();
   }, []);
 
-  const randomizeNote = () => {
+  const getRandomNote = () => {
     let newNote;
     do {
-      const randomIndex = Math.floor(Math.random() * notesData.length);
-      newNote = notesData[randomIndex];
-    } while (newNote.id === currentNote.id && notesData.length > 1);
-
-    // Simple pop animation effect key
-    const card = cardRef.current;
-    if (card) {
-      card.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        card.style.transform = 'scale(1)';
-      }, 150);
-    }
-
+      newNote = NOTES[Math.floor(Math.random() * NOTES.length)];
+    } while (newNote.id === currentNote.id && NOTES.length > 1);
     setCurrentNote(newNote);
   };
 
   const handleDownload = async () => {
     if (!cardRef.current) return;
+    setIsExporting(true);
 
-    // Create a canvas from the card
+    // Scale up for high res (1080px width)
+    const scale = 1080 / cardRef.current.offsetWidth;
+
     try {
       const canvas = await html2canvas(cardRef.current, {
-        scale: 2, // Higher quality
-        backgroundColor: null, // Transparent if card has transparency, but we probably want the gradient? 
-        // Actually request says "Export only the note card area (not the whole page)".
-        // But usually "Story" implies a full screen image.
-        // Request says: "Export only the note card area (not the whole page)." 
-        // AND "The exported image must be sized exactly 1080x1920".
-        // If we export just the CARD, it won't be 1080x1920 unless card IS 1080x1920.
-        // The card styling in NoteCard.tsx has width: 1080px (conceptually) but responsive.
-
-        // To get a 1080x1920 output of JUST the card, we'd need the card to BE that size or have a wrapper.
-        // If the user wants "Export only the note card area... sized exactly 1080x1920", maybe they mean the card IS the story?
-        // "Note card area" usually implies the rectangle. 
-        // IF I export just the rectangle, and it's 9:16, that's good.
-        // Let's ensure the capture captures the card at high res.
+        scale: scale,
+        backgroundColor: null, // Transparent bg if card has radius
         useCORS: true,
       });
 
-      const image = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
       link.href = image;
-      link.download = `kumonote_${currentNote.id}.png`;
+      link.download = `KumoNote_${currentNote.category}.png`;
       link.click();
     } catch (err) {
-      console.error("Download failed:", err);
-      alert("Oops! Could not save the note. Try again!");
+      console.error("Export failed", err);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -88,45 +60,65 @@ function App() {
           text: currentNote.text,
           url: window.location.href,
         });
-      } catch (err) {
-        console.log('Share canceled');
+      } catch (error) {
+        console.log('Error sharing', error);
       }
     } else {
-      // Fallback
-      alert("Downloaded! You can upload it to your story manually!");
-      handleDownload();
+      alert("Share API not supported on this browser! Try downloading.");
     }
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
+    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      <FloatingStickers />
 
-      {/* Background Particles Layer */}
-      {aestheticMode && (
-        <>
+      {/* Main UI Container */}
+      <div className="z-10 w-full max-w-md flex flex-col items-center gap-8">
 
-          <FloatingStickers />
-        </>
-      )}
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="font-heading text-5xl text-white drop-shadow-md select-none">KumoNote</h1>
+        </div>
 
-      {/* Main Card */}
-      <div className="z-10 w-full flex justify-center items-center p-4">
-        <NoteCard
-          note={currentNote}
-          aestheticMode={aestheticMode}
-          cardRef={cardRef}
-        />
+        {/* The Card */}
+        <NoteCard ref={cardRef} note={currentNote} />
+
+        {/* Controls */}
+        <div className="flex items-center gap-4">
+
+          {/* Refresh Button (Big) */}
+          <button
+            onClick={getRandomNote}
+            className="group relative bg-white px-8 py-4 rounded-full font-heading text-xl text-slate-500 font-bold transition-transform active:translate-y-1"
+            style={{ boxShadow: '0px 6px 0px #CBD5E1' }} // Chunky shadow
+          >
+            <div className="flex items-center gap-2">
+              <RefreshCw className="group-hover:rotate-180 transition-transform duration-500" />
+              <span>New Note</span>
+            </div>
+          </button>
+
+          {/* Download Button (Small) */}
+          <button
+            onClick={handleDownload}
+            disabled={isExporting}
+            className="bg-pink-100 p-4 rounded-full text-pink-500 transition-transform active:translate-y-1"
+            style={{ boxShadow: '0px 6px 0px #F8BBD0' }}
+          >
+            <Download />
+          </button>
+
+          {/* Share Button (Small) */}
+          <button
+            onClick={handleShare}
+            className="bg-blue-100 p-4 rounded-full text-blue-500 transition-transform active:translate-y-1"
+            style={{ boxShadow: '0px 6px 0px #B3E5FC' }}
+          >
+            <Share2 />
+          </button>
+
+        </div>
       </div>
-
-      {/* Controls */}
-      <Controls
-        onNewNote={randomizeNote}
-        onDownload={handleDownload}
-        onShare={handleShare}
-        aestheticMode={aestheticMode}
-        setAestheticMode={setAestheticMode}
-      />
-
     </div>
   );
 }

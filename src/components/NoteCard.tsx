@@ -1,74 +1,59 @@
-import React from 'react';
-import mascot from '../assets/mascot.png';
-
-interface Note {
-  id: number;
-  text: string;
-  category: string;
-  tags: string[];
-}
+import React, { forwardRef } from 'react';
+// We'll import Note from a central type definition now, or define locally if needed.
+// User's App.tsx imports { Note } from '../data/notes'. Let's assume we'll create that or allow local definition.
+// For now, let's define it here to be safe, or import if we create notes.ts.
+// Actually, App.tsx is the consumer. Let's assume we create notes.ts next.
+import { Note } from '../data/notes';
 
 interface NoteCardProps {
   note: Note;
-  aestheticMode: boolean;
-  cardRef: React.RefObject<HTMLDivElement | null>;
+  aestheticMode?: boolean; // Kept for compatibility if passed
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ note, aestheticMode, cardRef }) => {
+// We use forwardRef to expose the div to the parent for capture
+export const NoteCard = forwardRef<HTMLDivElement, NoteCardProps>(({ note }, ref) => {
   return (
     <div
-      ref={cardRef}
-      className={`relative p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all duration-500 ease-out transform ${aestheticMode ? 'glass-card' : 'solid-card'}`}
+      ref={ref}
+      id="capture-card"
+      className="relative bg-white shadow-xl rounded-[32px] p-8 flex flex-col justify-between items-center text-center overflow-hidden"
+      // Maintain Aspect Ratio 9:16
       style={{
-        // Dynamic sizing: try to fill width up to a max, but constrain height to view, maintaining ~9:16 visually
-        width: 'min(85vw, 400px)',
-        height: 'min(70vh, 700px)',
-        // We let the flex content justify itself. 
-        // Aspect ratio is not strictly enforced by CSS aspect-ratio here to avoid "fighting" 
-        // but we start with dimensions that are roughly phone-shaped.
-        // A true Instagram story is 9:16.
-        // If we want exact export, we can rely on html2canvas settings, but for UI, "fitting" is more important.
-
-        boxShadow: aestheticMode ? '0 8px 32px 0 rgba(31, 38, 135, 0.37)' : '0 10px 15px -3px rgba(0,0,0,0.1)',
-        border: aestheticMode ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
-        background: aestheticMode ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: aestheticMode ? 'blur(10px)' : 'none',
-        borderRadius: '24px',
+        aspectRatio: '9/16',
+        width: '100%',
+        maxWidth: '400px',
+        boxShadow: '0px 10px 25px -5px rgba(84, 110, 122, 0.15)' // Colored shadow
       }}
     >
-      <div className="flex-1 flex flex-col items-center justify-center z-10 w-full overflow-hidden">
-        <span className="uppercase tracking-widest text-[10px] md:text-xs mb-3 font-bold opacity-70" style={{ color: '#5D6D7E' }}>
+      {/* Decorative inner border */}
+      <div className="absolute inset-3 border-2 border-dashed border-blue-100 rounded-[24px] pointer-events-none" />
+
+      {/* Top: Mood */}
+      <div className="mt-8 z-10">
+        <span className="bg-blue-50 text-blue-400 px-4 py-1 rounded-full font-heading font-bold text-sm tracking-wide uppercase">
           {note.category}
         </span>
+      </div>
 
-        <h1 className="font-baloo text-2xl md:text-3xl lg:text-4xl mb-4 font-bold leading-tight break-words w-full" style={{ color: '#2E4053' }}>
+      {/* Center: Text */}
+      <div className="flex-1 flex items-center justify-center z-10 px-4">
+        <h1
+          className="font-heading text-3xl md:text-4xl leading-relaxed text-slate-600"
+        >
           {note.text}
         </h1>
-
-        <div className="flex gap-2 flex-wrap justify-center mt-4">
-          {note.tags.map(tag => (
-            <span key={tag} className="px-3 py-1 rounded-full text-xs font-nunito font-semibold bg-white/50 text-gray-600">
-              #{tag}
-            </span>
-          ))}
-        </div>
       </div>
 
-      {/* Mascot */}
-      {aestheticMode && (
-        <img
-          src={mascot}
-          alt="Cloud Mascot"
-          className="absolute bottom-8 right-6 w-20 h-20 md:w-24 md:h-24 object-contain animate-bounce-slow"
-        />
-      )}
-
-
-      <div className="absolute bottom-4 text-[10px] opacity-60 font-nunito tracking-wider">
+      {/* Bottom: Footer */}
+      <div className="mb-6 z-10 opacity-50 font-heading text-xs tracking-widest text-[#546E7A]">
         cloudnote • a note for you 💌
       </div>
+
+      {/* Internal Decor (Optional: Soft gradient blob in corner) */}
+      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-pink-100 rounded-full blur-2xl opacity-50 pointer-events-none" />
+      <div className="absolute -top-10 -left-10 w-32 h-32 bg-blue-100 rounded-full blur-2xl opacity-50 pointer-events-none" />
     </div>
   );
-};
+});
 
 export default NoteCard;

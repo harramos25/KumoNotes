@@ -1,61 +1,61 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 
-// Use Vite's glob import to get all sticker and particle images
+// Dynamically import all stickers and particles
 const stickerModules = import.meta.glob('../assets/sticker_pack*.png', { eager: true, import: 'default' });
 const particleModules = import.meta.glob('../assets/particles*.png', { eager: true, import: 'default' });
 
-const stickers = Object.values(stickerModules) as string[];
-const particles = Object.values(particleModules) as string[];
+const stickersAssets = Object.values(stickerModules) as string[];
+const particlesAssets = Object.values(particleModules) as string[];
 
-const allImages = [...stickers, ...particles];
+const allImages = [...stickersAssets, ...particlesAssets];
 
-const FloatingStickers: React.FC = () => {
-    // Generate random items on mount
-    const items = useMemo(() => {
-        // If no images found (fallback), return empty or Handle
+export const FloatingStickers = () => {
+    const stickers = useMemo(() => {
         if (allImages.length === 0) return [];
 
-        return Array.from({ length: 30 }).map((_, i) => {
-            const img = allImages[Math.floor(Math.random() * allImages.length)];
-            return {
-                id: i,
-                image: img,
-                left: Math.random() * 100, // random position
-                top: Math.random() * 100,
-                delay: Math.random() * 8,
-                duration: 15 + Math.random() * 15, // Slow float
-                scale: 0.3 + Math.random() * 0.4, // Random size
-                rotation: Math.random() * 360, // Random initial rotation
-                opacity: 0.6 + Math.random() * 0.4
-            };
-        });
+        // Create a dense field of stickers
+        return Array.from({ length: 25 }).map((_, i) => ({
+            id: i,
+            image: allImages[Math.floor(Math.random() * allImages.length)],
+            // Random starting positions
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            // Random delay for animation start
+            delay: Math.random() * 5,
+            scale: 0.5 + Math.random() * 0.5
+        }));
     }, []);
 
     return (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-            {items.map((item) => (
-                <div
-                    key={item.id}
-                    className="absolute animate-float"
-                    style={{
-                        left: `${item.left}%`,
-                        top: `${item.top}%`,
-                        animationDuration: `${item.duration}s`,
-                        animationDelay: `-${item.delay}s`,
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            {stickers.map((s, i) => (
+                <motion.div
+                    key={s.id}
+                    className="absolute opacity-60"
+                    style={{ left: s.x, top: s.y }} // Initial position
+                    initial={{ y: 0, x: 0 }}
+                    animate={{
+                        y: [0, -20, 0], // Bobbing
+                        x: [0, 10, 0],  // Drifting
+                    }}
+                    transition={{
+                        duration: 5 + Math.random() * 5, // Randomize timing
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: s.delay
                     }}
                 >
                     <img
-                        src={item.image}
+                        src={s.image}
                         alt=""
-                        className="select-none drop-shadow-sm"
                         style={{
-                            transform: `scale(${item.scale}) rotate(${item.rotation}deg)`,
-                            opacity: item.opacity,
+                            transform: `scale(${s.scale})`,
                             width: '64px',
                             height: 'auto'
                         }}
                     />
-                </div>
+                </motion.div>
             ))}
         </div>
     );
