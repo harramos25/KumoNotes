@@ -15,7 +15,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100dvh;
   /* Baby blue to Pastel Pink gradient */
   background: linear-gradient(-45deg, #a1c4fd, #c2e9fb, #fbc2eb, #fda085);
   background-size: 400% 400%;
@@ -23,27 +23,47 @@ body {
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #root {
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevent scroll on mobile */
+  overflow: hidden;
+  /* Prevent scroll on mobile */
 }
 
 /* Animations */
 @keyframes float {
-  0% { transform: translateY(0) translateX(0) scale(1); }
-  33% { transform: translateY(-20px) translateX(10px) scale(1.05); }
-  66% { transform: translateY(-10px) translateX(-10px) scale(0.95); }
-  100% { transform: translateY(0) translateX(0) scale(1); }
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+
+  33% {
+    transform: translateY(-20px) translateX(10px) scale(1.05);
+  }
+
+  66% {
+    transform: translateY(-10px) translateX(-10px) scale(0.95);
+  }
+
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
 }
 
 .animate-float {
@@ -51,33 +71,40 @@ body {
 }
 
 @keyframes bounce-slow {
-   0%, 100% { transform: translateY(0); }
-   50% { transform: translateY(-15px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 .animate-bounce-slow {
-    animation: bounce-slow 3s ease-in-out infinite;
+  animation: bounce-slow 3s ease-in-out infinite;
 }
 
 /* Glassmorphism Utilities */
 .glass-card {
-    background: rgba( 255, 255, 255, 0.25 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 10px );
-    -webkit-backdrop-filter: blur( 10px );
-    border-radius: 24px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .solid-card {
-    background: #ffffff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .font-baloo {
-    font-family: 'Baloo 2', cursive;
+  font-family: 'Baloo 2', cursive;
 }
 
 .font-nunito {
-    font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }

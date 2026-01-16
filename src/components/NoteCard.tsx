@@ -18,9 +18,17 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, aestheticMode, cardRef }) => 
   return (
     <div
       ref={cardRef}
-      className={`relative w-full max-w-sm md:max-w-md h-auto aspect-[9/16] p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all duration-500 ease-out transform ${aestheticMode ? 'glass-card' : 'solid-card'}`}
+      className={`relative p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all duration-500 ease-out transform ${aestheticMode ? 'glass-card' : 'solid-card'}`}
       style={{
-        maxHeight: '70vh', // Limit height to ensure it fits with controls
+        // Dynamic sizing: try to fill width up to a max, but constrain height to view, maintaining ~9:16 visually
+        width: 'min(85vw, 400px)',
+        height: 'min(70vh, 700px)',
+        // We let the flex content justify itself. 
+        // Aspect ratio is not strictly enforced by CSS aspect-ratio here to avoid "fighting" 
+        // but we start with dimensions that are roughly phone-shaped.
+        // A true Instagram story is 9:16.
+        // If we want exact export, we can rely on html2canvas settings, but for UI, "fitting" is more important.
+
         boxShadow: aestheticMode ? '0 8px 32px 0 rgba(31, 38, 135, 0.37)' : '0 10px 15px -3px rgba(0,0,0,0.1)',
         border: aestheticMode ? '1px solid rgba(255, 255, 255, 0.18)' : 'none',
         background: aestheticMode ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.95)',
@@ -51,7 +59,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, aestheticMode, cardRef }) => 
         <img
           src={mascot}
           alt="Cloud Mascot"
-          className="absolute bottom-8 right-8 w-24 h-24 object-contain animate-bounce-slow"
+          className="absolute bottom-8 right-6 w-20 h-20 md:w-24 md:h-24 object-contain animate-bounce-slow"
         />
       )}
 
