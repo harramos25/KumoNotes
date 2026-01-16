@@ -1,9 +1,9 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 // We'll import Note from a central type definition now, or define locally if needed.
 // User's App.tsx imports { Note } from '../data/notes'. Let's assume we'll create that or allow local definition.
 // For now, let's define it here to be safe, or import if we create notes.ts.
 // Actually, App.tsx is the consumer. Let's assume we create notes.ts next.
-import { Note } from '../data/notes';
+import type { Note } from '../data/notes';
 
 interface NoteCardProps {
   note: Note;

@@ -29,7 +29,7 @@ export const FloatingStickers = () => {
 
     return (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-            {stickers.map((s, i) => (
+            {stickers.map((s) => (
                 <motion.div
                     key={s.id}
                     className="absolute opacity-60"

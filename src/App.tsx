@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import html2canvas from 'html2canvas'; // Import library
-import { NOTES, Note } from './data/notes';
+import { NOTES, type Note } from './data/notes';
 import { FloatingStickers } from './components/FloatingStickers';
 import { NoteCard } from './components/NoteCard';
 // We need to import the icons. User asked for Lucide React.
