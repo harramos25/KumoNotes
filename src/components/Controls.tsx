@@ -10,10 +10,10 @@ interface ControlsProps {
 
 const Controls: React.FC<ControlsProps> = ({ onNewNote, onDownload, onShare, aestheticMode, setAestheticMode }) => {
     return (
-        <div className="fixed bottom-6 left-0 right-0 z-50 flex flex-col items-center gap-4 p-4 pointer-events-none"> {/* Full width container */}
+        <div className="flex flex-col items-center gap-4 p-4 z-50"> {/* Removed fixed positioning */}
 
             {/* Main Actions Row */}
-            <div className="flex gap-4 pointer-events-auto">
+            <div className="flex gap-4">
                 {/* New Note Button */}
                 <button
                     onClick={onNewNote}
@@ -32,7 +32,7 @@ const Controls: React.FC<ControlsProps> = ({ onNewNote, onDownload, onShare, aes
             </div>
 
             {/* Secondary Row */}
-            <div className="flex gap-4 items-center pointer-events-auto">
+            <div className="flex gap-4 items-center">
                 {/* Share Button (Mobile mostly) */}
                 <button
                     onClick={onShare}
