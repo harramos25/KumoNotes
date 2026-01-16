@@ -245,6 +245,15 @@ body {
   margin-top: 16px;
 }
 
+.watermark {
+  font-family: "Pixelify Sans", system-ui;
+  font-size: 10px;
+  color: #8c7acb;
+  opacity: 0.3;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
 /* Fix #4: Tag Styling & Open Button */
 .tag-row {
   display: flex;

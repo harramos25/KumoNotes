@@ -104,6 +104,7 @@ function App() {
               </div>
 
               <div className="note-footer">a note for you 💗</div>
+              <div className="watermark">kumo-notes.vercel.app</div>
             </div>
           )}
 
@@ -137,6 +138,7 @@ function App() {
                 ))}
               </div>
               <div className="note-footer">a note for you 💗</div>
+              <div className="watermark">kumo-notes.vercel.app</div>
             </div>
           </div>
         </div>
