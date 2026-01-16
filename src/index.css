@@ -76,56 +76,63 @@ body {
   /* padding-bottom removed, handled by card-wrap */
 }
 
-/* Fix #10: Card Wrapper (Spacing & Layout) */
-.card-wrap {
+/* Fix #10: Preview Wrapper (Container for the Scaled UI) */
+.preview-wrap {
   width: 100%;
   display: flex;
-  /* Changed from grid to flex for better centering of wide children */
   flex-direction: column;
   align-items: center;
-  /* Removed padding as the scale handles the "space" visually */
-  padding-bottom: 40px;
-  overflow: visible;
-  /* Ensure no clipping of the wide surface */
+  padding: 24px 16px 40px;
+  overflow: hidden;
+  /* Hide the overflow from the huge scaled element */
+  /* This ensures mobile doesn't scroll horizontally or vertically unnecessarily */
 }
 
 /*
    Fix #13: Safe Export Surface
    This is the actual "canvas" we export. It is 1080x1920 (Story size).
-   We scale it down to show it on screen.
 */
 .export-surface {
   position: relative;
   width: 1080px;
   height: 1920px;
-  overflow: hidden;
   background: #fff;
   /* fallback */
+  flex-shrink: 0;
 
-  /* Scale down for UI display */
-  transform: scale(0.32);
   transform-origin: top center;
   border-radius: 40px;
   /* larger radius for the huge container */
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+}
 
-  /* Crucial for centering: Flexbox handles align-items center,
-     but explicit margin doesn't hurt. */
-  margin: 0 auto;
-  flex-shrink: 0;
-  /* Don't let flex shrink the 1080px width */
-
+/*
+   The UI state: Scaled down to fit screen.
+   This class is removed on the CLONE during export.
+*/
+.export-preview {
+  transform: scale(0.32);
+  /* Use negative margin to reclaim space ONLY if needed visually,
+     but overflow:hidden on parent usually is cleaner.
+     User suggested standard flow.
+     If we scale 0.32, the height (1920) becomes ~614px.
+     The element still takes up 1920px in DOM flow unless we adjust margin-bottom
+     OR the parent has fixed height/overflow behavior.
+     Let's keep the marginBottom hack just to be safe for flow,
+     or trust the user's "overflow: hidden" on parent to chop it?
+     Overflow hidden chops the visual, but the space might still be reserved?
+     Transforms don't affect layout flow size, the element is still 1920px tall in flow
+     unless we do negative margins.
+     Let's adding the negative margin back to the Preview class specifically.
+  */
   margin-bottom: -1250px;
-  /* Counteract the huge height after scaling */
 }
 
 /* Mobile Scale Adjustment */
 @media (max-width: 480px) {
-  .export-surface {
-    /* Slightly smaller scale for safety on narrow screens */
+  .export-preview {
     transform: scale(0.28);
     margin-bottom: -1330px;
-    /* Adjust spacing */
   }
 }
 
