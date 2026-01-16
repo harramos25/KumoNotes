@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Dynamically import assets using Vite's glob feature to avoid manual file moving
 const stickerModules = import.meta.glob('../assets/sticker_pack*.png', { eager: true, import: 'default' });
