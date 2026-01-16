@@ -76,51 +76,51 @@ function App() {
   };
 
   return (
-    <div className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 relative overflow-hidden app">
+    <div className="scene">
       <FloatingStickers seedKey={seed} stickerCount={6} particleCount={4} />
 
       {/* Main UI Container */}
-      <div className="relative z-10 w-full max-w-md flex flex-col items-center gap-8">
-
-
-        {/* The Card */}
-        {!hasOpened ? (
-          <div className="note-card">
-            <div className="note-title">KumoNote ☁️</div>
-            <button className="open-btn" onClick={handleOpen}>
-              💌 A note for you — Open
-            </button>
-            <div className="note-footer" style={{ marginTop: '12px' }}>tap to receive your note</div>
-          </div>
-        ) : (
-          <div className="note-card" ref={cardRef}>
-            <div className="note-title">KUMONOTE ☁️</div>
-            <div className="note-text">{currentNote.text}</div>
-
-            {/* Tags */}
-            <div className="tag-row">
-              {(currentNote.tags ?? []).map((t: string) => (
-                <span key={t} className="tag">#{t}</span>
-              ))}
+      <main className="app">
+        <div className="relative z-10 w-full max-w-md flex flex-col items-center gap-8">
+          {/* The Card */}
+          {!hasOpened ? (
+            <div className="note-card">
+              <div className="note-title">KumoNote ☁️</div>
+              <button className="open-btn" onClick={handleOpen}>
+                💌 A note for you — Open
+              </button>
+              <div className="note-footer" style={{ marginTop: '12px' }}>tap to receive your note</div>
             </div>
+          ) : (
+            <div className="note-card" ref={cardRef}>
+              <div className="note-title">KUMONOTE ☁️</div>
+              <div className="note-text">{currentNote.text}</div>
 
-            <div className="note-footer">a note for you 💗</div>
-          </div>
-        )}
+              {/* Tags */}
+              <div className="tag-row">
+                {(currentNote.tags ?? []).map((t: string) => (
+                  <span key={t} className="tag">#{t}</span>
+                ))}
+              </div>
 
-        {/* Controls - Only visible after opening */}
-        {hasOpened && (
-          <div className="mt-8 z-50">
-            <Controls
-              onDownload={handleDownload}
-              onShare={handleShare}
-              aestheticMode={aestheticMode}
-              setAestheticMode={setAestheticMode}
-              disabled={isExporting}
-            />
-          </div>
-        )}
-      </div>
+              <div className="note-footer">a note for you 💗</div>
+            </div>
+          )}
+
+          {/* Controls - Only visible after opening */}
+          {hasOpened && (
+            <div className="mt-8 z-50">
+              <Controls
+                onDownload={handleDownload}
+                onShare={handleShare}
+                aestheticMode={aestheticMode}
+                setAestheticMode={setAestheticMode}
+                disabled={isExporting}
+              />
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

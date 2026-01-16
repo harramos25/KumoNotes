@@ -174,8 +174,10 @@ body {
     transform: scale(0.96);
   }
 
-  transform: scale(1);
-}
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Fix #6: Controls Row (Strict Horizontal) */
