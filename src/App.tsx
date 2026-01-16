@@ -8,6 +8,8 @@ import Controls from './components/Controls';
 function App() {
   const [currentNote, setCurrentNote] = useState<Note>(NOTES[0]); // Default init, but won't be shown until open
   const cardRef = useRef<HTMLDivElement>(null);
+  // New Export Ref
+  const exportRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [seed, setSeed] = useState(0);
   const [aestheticMode, setAestheticMode] = useState(true);
@@ -34,17 +36,15 @@ function App() {
   };
 
   const handleDownload = async () => {
-    if (!cardRef.current) return;
+    if (!exportRef.current) return;
     setIsExporting(true);
 
-    // Scale up for high res (1080px width)
-    const scale = 1080 / cardRef.current.offsetWidth;
-
     try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: scale,
-        backgroundColor: null, // Transparent bg if card has radius
+      /* Capture the dedicated export frame */
+      const canvas = await html2canvas(exportRef.current, {
+        scale: 1, // It's already 1080px wide
         useCORS: true,
+        backgroundColor: null, // We have our own bg
       });
 
       const image = canvas.toDataURL("image/png");
@@ -121,6 +121,26 @@ function App() {
           )}
         </div>
       </main>
+
+      {/* Hidden Export Template (1080x1920) */}
+      <div className="export-hidden">
+        <div ref={exportRef} className="export-frame">
+          <div className="export-bg" />
+          <div className="export-card-container">
+            {/* Scaled up Card for Export */}
+            <div className="note-card" style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
+              <div className="note-title">KUMONOTE ☁️</div>
+              <div className="note-text">{currentNote.text}</div>
+              <div className="tag-row">
+                {(currentNote.tags ?? []).map((t: string) => (
+                  <span key={t} className="tag">#{t}</span>
+                ))}
+              </div>
+              <div className="note-footer">a note for you 💗</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
