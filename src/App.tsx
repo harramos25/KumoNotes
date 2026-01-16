@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import html2canvas from 'html2canvas'; // Import library
 import { NOTES, type Note } from './data/notes';
 import { FloatingStickers } from './components/FloatingStickers';
