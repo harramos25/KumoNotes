@@ -82,10 +82,6 @@ function App() {
       {/* Main UI Container */}
       <div className="relative z-10 w-full max-w-md flex flex-col items-center gap-8">
 
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="font-heading text-5xl text-white drop-shadow-md select-none">KumoNote</h1>
-        </div>
 
         {/* The Card */}
         {!hasOpened ? (
@@ -115,7 +111,6 @@ function App() {
         {/* Controls */}
         <div className="mt-8 z-50">
           <Controls
-            onNewNote={getRandomNote}
             onDownload={handleDownload}
             onShare={handleShare}
             aestheticMode={aestheticMode}

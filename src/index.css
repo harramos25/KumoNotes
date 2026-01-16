@@ -13,20 +13,39 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 96px;
-  /* Room for fixed bottom controls */
+  padding-bottom: 110px;
+  /* Fix #2: Room for controls */
 }
 
-/* Fix #2: Sticker Layer Styles */
+/* Fix #4: Control Button Sizing */
+.control-btn {
+  background: #ffe0f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #5b6b7a;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 0 0 2px #ffb7dc,
+    0 6px 0 #e89ac5;
+
+  transition: transform 0.1s ease;
+}
+
+/* Fix #5: Muted Stickers */
 .sticker-layer {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  /* doesn't block clicks */
   z-index: 0;
   overflow: hidden;
 }
@@ -36,7 +55,9 @@ body {
   transform: translate(-50%, -50%);
   animation: floaty var(--dur) ease-in-out infinite;
   animation-delay: var(--delay);
-  filter: saturate(0.95);
+  opacity: 0.18 !important;
+  /* Force low opacity */
+  filter: blur(0.2px) saturate(0.95);
 }
 
 @keyframes floaty {
@@ -54,50 +75,97 @@ body {
 }
 
 .note-card {
-  background: #ffffff;
-  border-radius: 28px;
-  padding: 28px 24px;
+  background: #fff6ff;
+  border-radius: 20px;
+  padding: 28px 26px;
   max-width: 420px;
   width: 88%;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   text-align: center;
+  position: relative;
+  z-index: 10;
+
+  /* pixel-panel illusion */
+  box-shadow:
+    0 0 0 3px #c7b9ff,
+    0 12px 40px rgba(0, 0, 0, 0.18);
+
   animation: popIn 0.4s ease-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Ensure it looks like a card */
-  aspect-ratio: auto;
-  /* Let content dictate or use specific ratio if needed, but user said "aspect-ratio: 9/16" is for the STORY export. For UI, "width: 88%, max-width: 420px" is the rule. */
 }
 
+/* Fix #3: Note Hierarchy */
 .note-title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  /* 12-13px */
-  opacity: 0.6;
-  margin-bottom: 12px;
-  font-weight: 700;
+  font-family: "Pixelify Sans", system-ui;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #8c7acb;
+  margin-bottom: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #5b6b7a;
+  opacity: 0.45;
 }
 
 .note-text {
-  font-family: 'Baloo 2', cursive;
-  font-size: 32px;
-  /* 28-34px */
-  line-height: 1.3;
+  font-family: "Pixelify Sans", system-ui;
+  font-size: 26px;
+  line-height: 1.45;
   color: #5b6b7a;
-  margin-bottom: 24px;
-  font-weight: 600;
+  margin-bottom: 18px;
 }
 
 .note-footer {
-  font-family: 'Nunito', sans-serif;
-  font-size: 12px;
-  opacity: 0.5;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  opacity: 0.45;
   color: #5b6b7a;
+  margin-top: 16px;
+}
+
+/* Fix #4: Tag Styling & Open Button */
+.tag-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(200, 220, 255, 0.6);
+  color: #5b6b7a;
+}
+
+.open-btn {
+  font-family: 'Pixelify Sans', system-ui;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  background: #f7dff0;
+  color: #5b6b7a;
+  box-shadow:
+    0 0 0 2px #ffb7dc,
+    0 4px 0 #e89ac5;
+  transition: transform 0.1s ease;
+  font-weight: 400;
+}
+
+.open-btn:hover {
+  transform: translateY(-2px);
+}
+
+.open-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 2px #ffb7dc,
+    0 0 0 #e89ac5;
 }
 
 @keyframes popIn {
@@ -111,5 +179,3 @@ body {
     transform: scale(1);
   }
 }
-
-/* Floating Stickers CSS if needed, though we use framer-motion inline mostly */
