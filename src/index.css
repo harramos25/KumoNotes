@@ -81,8 +81,73 @@ body {
   width: 100%;
   display: grid;
   place-items: center;
-  padding: 24px 16px 140px;
-  /* top/side + room for controls */
+  /* Removed padding as the scale handles the "space" visually */
+  padding-bottom: 40px;
+}
+
+/* 
+   Fix #13: Safe Export Surface 
+   This is the actual "canvas" we export. It is 1080x1920 (Story size).
+   We scale it down to show it on screen.
+*/
+.export-surface {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  background: #fff;
+  /* fallback */
+
+  /* Scale down for UI display */
+  transform: scale(0.32);
+  transform-origin: top center;
+  border-radius: 40px;
+  /* larger radius for the huge container */
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+  margin-bottom: -1200px;
+  /* Counteract the huge height after scaling */
+}
+
+/* Mobile Scale Adjustment */
+@media (max-width: 480px) {
+  .export-surface {
+    transform: scale(0.27);
+    margin-bottom: -1300px;
+    /* Adjust spacing */
+  }
+}
+
+.export-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('./assets/pixel-sky.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.export-card {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 180px 120px;
+}
+
+/* Make sure the note card inside fills the convenient space or behaves nicely */
+.export-card .note-card {
+  /* We reset the note-card sizing for the 1080p context */
+  width: 100%;
+  max-width: 800px;
+  /* proportional to 1080px width */
+  margin: 0;
+  transform: none;
+  /* Reset breathe animation context if needed, but we might want it? User said "breathe" for UI. */
+  /* User said "breathe" animation. If we scale the whole surface, the breathe animation is inside. */
 }
 
 /* Fix #4: Control Button Sizing & Interactions */
@@ -317,16 +382,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* Fix #7: Dedicated Export Frame (Hidden) */
-.export-hidden {
-  position: fixed;
-  left: -9999px;
-  top: 0;
-  width: 1080px;
-  height: 1920px;
-  z-index: -9999;
-  visibility: visible;
-}
+/* Obsolete .export-hidden styles removed */
 
 .export-frame {
   position: relative;
