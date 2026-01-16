@@ -31,15 +31,21 @@ body {
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  /* Fix #8: Background Image Replacement */
+  background-image: url('./assets/pixel-sky.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* Soft Sky Glow */
+/* Soft Sky Glow (Optional: Can keep or remove if image has it. Keeping for extra depth) */
 .scene::before {
   content: "";
   position: absolute;
   inset: -30%;
   background: radial-gradient(circle at 50% 18%,
-      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.4) 0%,
+      /* Reduced opacity as image has details */
       rgba(255, 255, 255, 0.0) 55%);
   pointer-events: none;
   z-index: 0;
@@ -51,7 +57,8 @@ body {
   position: absolute;
   inset: -30%;
   background: radial-gradient(circle at 50% 92%,
-      rgba(255, 220, 240, 0.55) 0%,
+      rgba(255, 220, 240, 0.3) 0%,
+      /* Reduced opacity */
       rgba(255, 220, 240, 0.0) 55%);
   pointer-events: none;
   z-index: 0;
@@ -267,10 +274,10 @@ body {
 .export-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-      #eef7ff 0%,
-      #f3f1ff 45%,
-      #fff1f6 100%);
+  background-image: url('./assets/pixel-sky.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   z-index: 0;
 }
 
