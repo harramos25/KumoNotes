@@ -89,6 +89,7 @@ function App() {
             onShare={handleShare}
             aestheticMode={true}
             setAestheticMode={() => { }}
+            disabled={isExporting}
           />
         </div>
       </div>
