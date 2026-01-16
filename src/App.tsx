@@ -116,6 +116,7 @@ function App() {
                 💌 A note for you — Open
               </button>
               <div className="note-footer" style={{ marginTop: '12px' }}>tap to receive your note</div>
+              <div className="watermark">kumo-notes.vercel.app</div>
             </div>
           ) : (
             <div className="note-card" ref={cardRef}>
