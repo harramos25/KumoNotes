@@ -1,0 +1,37 @@
+[
+  { "id": 1, "text": "You’re doing better than you think. Seriously.", "category": "gentle", "tags": ["comfort","healing"] },
+  { "id": 2, "text": "You don’t have to be perfect to be worthy.", "category": "gentle", "tags": ["selfworth"] },
+  { "id": 3, "text": "If today is hard, let it be hard—then let it pass.", "category": "gentle", "tags": ["anxiety","comfort"] },
+  { "id": 4, "text": "You’re allowed to rest without earning it.", "category": "gentle", "tags": ["rest","burnout"] },
+  { "id": 5, "text": "You are not behind. You’re on your timeline.", "category": "gentle", "tags": ["pressure","life"] },
+
+  { "id": 6, "text": "You have main-character energy and it shows.", "category": "confidence", "tags": ["hype","energy"] },
+  { "id": 7, "text": "You’re more capable than your doubts are loud.", "category": "confidence", "tags": ["motivation"] },
+  { "id": 8, "text": "Don’t shrink yourself. The world can adjust.", "category": "confidence", "tags": ["bold"] },
+  { "id": 9, "text": "You’re the kind of person people feel safe around.", "category": "confidence", "tags": ["vibe","kind"] },
+  { "id": 10, "text": "You glow differently when you stop explaining yourself.", "category": "confidence", "tags": ["boundaries"] },
+
+  { "id": 11, "text": "I hope something small makes you smile today.", "category": "wholesome", "tags": ["joy"] },
+  { "id": 12, "text": "You matter more than you realize.", "category": "wholesome", "tags": ["connection"] },
+  { "id": 13, "text": "Your existence makes the world softer.", "category": "wholesome", "tags": ["kindness"] },
+  { "id": 14, "text": "Somebody out there is proud of you. I am too.", "category": "wholesome", "tags": ["support"] },
+  { "id": 15, "text": "You’re proof that good people still exist.", "category": "wholesome", "tags": ["human"] },
+
+  { "id": 16, "text": "You look like you’d pick elite road trip music.", "category": "funny", "tags": ["light","vibe"] },
+  { "id": 17, "text": "You give ‘I say sorry to the chair I bump into’ energy.", "category": "funny", "tags": ["cute"] },
+  { "id": 18, "text": "You look like you’d pet every dog you see. Respect.", "category": "funny", "tags": ["wholesome"] },
+  { "id": 19, "text": "You radiate ‘secretly a softie’ vibes.", "category": "funny", "tags": ["cute"] },
+  { "id": 20, "text": "If good vibes had a face, it’d be you.", "category": "funny", "tags": ["hype"] },
+
+  { "id": 21, "text": "It’s okay to be a work in progress. That’s literally the point.", "category": "anxious", "tags": ["overthinking"] },
+  { "id": 22, "text": "You don’t need to solve your whole life today.", "category": "anxious", "tags": ["pressure"] },
+  { "id": 23, "text": "Your feelings are valid—even the messy ones.", "category": "anxious", "tags": ["emotions"] },
+  { "id": 24, "text": "Breathe. You’ve handled worse than this.", "category": "anxious", "tags": ["calm"] },
+  { "id": 25, "text": "You’re not too sensitive. You’re just honest.", "category": "anxious", "tags": ["identity"] },
+
+  { "id": 26, "text": "You’ve survived 100% of your worst days. That’s insane.", "category": "motivation", "tags": ["strength"] },
+  { "id": 27, "text": "Small steps still move you forward. Keep going.", "category": "motivation", "tags": ["progress"] },
+  { "id": 28, "text": "Future you is cheering for present you.", "category": "motivation", "tags": ["future"] },
+  { "id": 29, "text": "You’re building a life you’ll thank yourself for.", "category": "motivation", "tags": ["growth"] },
+  { "id": 30, "text": "You don’t have to feel ready. You just have to start.", "category": "motivation", "tags": ["action"] }
+] 
